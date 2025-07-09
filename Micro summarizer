@@ -1,0 +1,20 @@
+from transformers import pipeline
+
+# Load a small summarization model
+summarizer = pipeline("summarization", model="t5-small", tokenizer="t5-small")
+
+def generate_summary(text):
+    summary = summarizer(text, max_length=30, min_length=5, do_sample=False)
+    return summary[0]['summary_text']
+
+print("🔁 Micro Summary Generator (type 'exit' to stop)\n")
+
+while True:
+    user_input = input("📥 Enter a paragraph: ")
+
+    if user_input.lower() == "exit":
+        print("👋 Exiting the summary generator.")
+        break
+
+    summary = generate_summary(user_input)
+    print("📝 Summary:", summary, "\n")
